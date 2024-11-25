@@ -53,7 +53,7 @@ fi
 # 6. 파일을 홈 디렉토리로 심볼릭 링크 생성
 echo "[6] Creating symbolic links for configuration files in home directory..."
 
-FILES=(.gitconfig .my_aliases.sh .vimrc .zshrc)
+FILES=(.gitconfig .my_aliases.sh .vimrc .zshrc .p10k.zsh)
 for FILE in "${FILES[@]}"; do
     if [ -f "$FILE" ]; then
         if [ -e "$HOME/$FILE" ]; then
@@ -77,3 +77,5 @@ else
 fi
 
 echo "[8] Installation and setup complete. Please restart your terminal or open a new terminal session."
+
+zsh

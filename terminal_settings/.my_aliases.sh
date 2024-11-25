@@ -79,6 +79,15 @@ alias rmo="find . -maxdepth 1 -type f -name '*\.o*' -exec rm {} \;"
 alias rmt="rm _TEST*"
 
 ################################################
+# Flutter
+################################################
+alias fpa="flutter pub add"
+alias fpu="flutter pub upgrade"
+alias fpr="flutter pub remove"
+alias fpo="flutter pub outdated"
+alias fps="flutter pub search"
+
+################################################
 # Directory / Files
 ################################################
 alias duh="du -h"
@@ -214,10 +223,10 @@ alias gpso="git push origin"
 alias gpsf="git push --force-with-lease"
 alias gpsa="git push --all"
 alias gpsao="git push --all origin"
-alias gpsu="git push --set-upstream" # == -u
+alias gpsu="git push -u" # == git push --set-upstream
 alias gpsuf="gpsu --force-with-lease"
 alias gpsuo="gpsu origin"
-# git push --set-upstream origin main
+# git push -u origin main
 alias gpsuom="gpsuo main"
 alias gpsufo="gpsuf origin"
 alias gpsufom="gpsufo main"
@@ -238,6 +247,7 @@ alias gbr="git branch"
 ### Rename the local branch to the new name
 # git branch -m <old_name> <new_name>
 alias gbrm="git branch -m"
+alias gbrmm="git branch -M main"
 
 alias gbrd="git branch --delete"
 ### Delete the old branch on remote - where <remote> is, for example, origin
@@ -324,6 +334,7 @@ alias grbc="git rebase --continue"
 alias gcf="git config"
 alias gcfl="git config -l"
 alias gcfge="git config --global --edit"
+
 
 ################################################
 # Docker
@@ -524,10 +535,10 @@ alias ar="sudo apt remove -y"
 
 ###### WARNING!!! ######
 # dev settings: backup all
-alias dsba="zsh $HOME/_ALL_CODES/_Dev_Settings_Backup/BACKUP_ALL.sh"
+alias dsba="zsh $HOME/_ALL_CODES/dev-settings-backup/BACKUP_ALL.sh"
 
 # dev settings: apply all
-alias dsaa="zsh $HOME/_ALL_CODES/_Dev_Settings_Backup/APPLY_ALL.sh"
+alias dsaa="zsh $HOME/_ALL_CODES/dev-settings-backup/APPLY_ALL.sh"
 ########################
 
 alias cddl="cd ~/Downloads"
@@ -536,17 +547,20 @@ alias cdo="cd $ONE_DRIVE/"
 
 alias cda="cd $HOME/_ALL_CODES"
 alias cdaf="cd $HOME/_ALL_CODES/AIFFEL_quest_cr"
+alias cdafd="cd $HOME/_ALL_CODES/AIFFEL_DATAthon"
+alias cdaff="cd $HOME/_ALL_CODES/AIFFEL_Flutter_FastAPI"
+alias cdafv="cd $HOME/_ALL_CODES/AIFFEL_vgg16_api_tutorial"
 
 alias cds="cd $HOME/_ALL_CODES/_Study_Notes"
 
-alias cddsb="cd $HOME/_ALL_CODES/_Dev_Settings_Backup"
-alias cddsbt="cd $HOME/_ALL_CODES/_Dev_Settings_Backup/terminal_settings"
+alias cddsb="cd $HOME/_ALL_CODES/dev-settings-backup"
+alias cddsbt="cd $HOME/_ALL_CODES/dev-settings-backup/terminal_settings"
 
 alias cdp="cd $HOME/_ALL_CODES/_PLAYGROUND_for_each_IDE"
 alias cdpp="cd $HOME/_ALL_CODES/_PLAYGROUND_for_each_IDE/Pycharm"
 
 alias cd1="cd $HOME/_ALL_CODES/AIFFEL_quest_cr"
-alias cd2="cd $HOME/_ALL_CODES/_Dev_Settings_Backup"
+alias cd2="cd $HOME/_ALL_CODES/dev-settings-backup"
 
 
 

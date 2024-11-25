@@ -2,8 +2,9 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
 
 if [[ "$(command -v python3)" != "" ]]; then
 	alias py="python3"
@@ -37,15 +38,16 @@ print('>>>>>>>>> paths end >>>>>>>>>')
 echo "OSTYPE: $OSTYPE"
 echo "NAME: $(hostname)"
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    ip=$(hostname -I | sed s"/[0-9.]*/\0 |/g" | sed s"/ |  |//")
-	echo "IP: $ip"
+# Mac OS
+if [[ "$OSTYPE" == darwin* ]]; then
+    ### Imported from .zprofile ###
+    # Init Homebrew
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 
-    if [[ "$(whoami)" == "hyuk_ubuntu" ]]; then
-        export ONE_DRIVE="/mnt/d/OneDrive"
-    fi
+    # Created by `pipx` on 2024-08-22 05:48:00
+    export PATH="$PATH:/Users/jud210/.local/bin"
+    ######################################
 
-elif [[ "$OSTYPE" == darwin* ]]; then
     ip=$(ifconfig en0 | grep 'inet ' | awk '{print $2}')
     echo "IP: $ip"
 
@@ -57,10 +59,26 @@ elif [[ "$OSTYPE" == darwin* ]]; then
     export PATH="/sbin:$PATH"
     export PATH="$HOME/Developments/flutter/bin:$PATH"
 
+    # brew install pyenv pyenv-virtualenv
+    # pyenv install 3.12.3
+    # pyenv versions
+    # pyenv virtualenv 3.12.3 ~/_ALL_CODES/_venv_py
+    export PATH="$HOME/.pyenv/bin:$PATH"
+    if command -v pyenv 1>/dev/null 2>&1; then
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+    fi
+
 	# Ruby
-    export GEM_HOME=$HOME/.gem
-    export PATH="/usr/local/opt/ruby/bin:$PATH"
-    export PATH=$GEM_HOME/bin:$PATH
+    # export GEM_HOME=$HOME/.gem
+    # export PATH="/usr/local/opt/ruby/bin:$PATH"
+    # export PATH=$GEM_HOME/bin:$PATH
+
+    # chruby installation for jekyll
+    # https://jekyllrb.com/docs/installation/macos/
+    source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh
+    source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
+    chruby ruby-3.3.5
 
 	# Java
     export JAVA_HOME="$(/usr/libexec/java_home)"
@@ -69,9 +87,17 @@ elif [[ "$OSTYPE" == darwin* ]]; then
     export PATH="/usr/local/opt/openjdk/bin:$PATH"
     export CPPFLAGS="-I/usr/local/opt/openjdk/include"
 
+# WSL2
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+    ip=$(hostname -I | sed s"/[0-9.]*/\0 |/g" | sed s"/ |  |//")
+	echo "IP: $ip"
+
+    if [[ "$(whoami)" == "hyuk_ubuntu" ]]; then
+        export ONE_DRIVE="/mnt/d/OneDrive"
+    fi
+
+# Git Bash //Win10
 elif [[ "$OSTYPE" == "msys" ]]; then
-    # Git Bash //Win10
-    # My Win10 Computer
     ip=$(ipconfig | grep IPv4 | sed s"/.*: //g" | awk 1 ORS=' | ' | sed s"/ | $//g")
     echo "$ip"
 
@@ -137,15 +163,22 @@ PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print}')
 
 
 # 가상환경 자동 활성화 및 경로 출력
-if [ -d "$HOME/_ALL_CODES/_venv_py" ]; then
-    if [ -z "$VIRTUAL_ENV" ]; then  # 가상환경이 활성화되지 않은 경우에만 활성화
-        source $HOME/_ALL_CODES/_venv_py/bin/activate
-        echo "Python3 Virtual environment activated. ($(basename $VIRTUAL_ENV))"
+if [ -d "$HOME/.pyenv/versions/_venv_py" ]; then
+    source $HOME/.pyenv/versions/_venv_py/bin/activate
+    echo "Python3 Virtual environment activated. ($(basename $VIRTUAL_ENV))"
 
-        # Python과 pip 경로 출력
-        echo "Python path: $(which python3)"
-        echo "pip path: $(which pip)"
-    fi
+    # Python과 pip 경로 출력
+    echo "Python path: $(which python3)"
+    # Python path: /Users/jud210/.pyenv/versions/3.12.3/envs/_venv_py/bin/python3
+    echo "pip path: $(which pip)"
+    # pip path: /Users/jud210/.pyenv/versions/3.12.3/envs/_venv_py/bin/pip
+elif [ -d "$HOME/_ALL_CODES/_venv_py" ]; then
+    source $HOME/_ALL_CODES/_venv_py/bin/activate
+    echo "Python3 Virtual environment activated. ($(basename $VIRTUAL_ENV))"
+
+    # Python과 pip 경로 출력
+    echo "Python path: $(which python3)"
+    echo "pip path: $(which pip)"
 else
     echo "Python3 Virtual environment is not activated."
 
@@ -153,6 +186,7 @@ else
     echo "System Python path: $(which python3)"
     echo "System pip path: $(which pip)"
 fi
+
 
 ################################################################################
 ############### Backup of Oh-My-Zsh Commentary
