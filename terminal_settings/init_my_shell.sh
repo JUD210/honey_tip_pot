@@ -76,6 +76,6 @@ else
     echo "zsh is already the default shell."
 fi
 
-echo "[8] Installation and setup complete. Please restart your terminal or open a new terminal session."
+echo "[8] Installation and setup complete. Restarting your terminal shell as zsh"
 
 zsh
