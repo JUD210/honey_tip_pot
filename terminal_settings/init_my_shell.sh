@@ -53,19 +53,40 @@ fi
 # 6. 파일을 홈 디렉토리로 심볼릭 링크 생성
 echo "[6] Creating symbolic links for configuration files in home directory..."
 
-FILES=(.gitconfig .my_aliases.sh .vimrc .zshrc .bashrc .p10k.zsh)
+FILES=(.my_aliases.sh .vimrc .zshrc .bashrc .p10k.zsh)
 for FILE in "${FILES[@]}"; do
     if [ -f "$FILE" ]; then
         if [ -e "$HOME/$FILE" ]; then
             echo "$HOME/$FILE already exists. Removing existing file or link."
             rm -f "$HOME/$FILE" # 기존 파일이나 링크 삭제
         fi
-        ln -s "$(pwd)/$FILE" "$HOME/$FILE"
+        ln -sf "$(pwd)/$FILE" "$HOME/$FILE"
         echo "Symbolic link for $FILE created in home directory."
     else
         echo "$FILE not found in the current directory."
     fi
 done
+
+# 운영 체제에 따라 .gitconfig 심볼릭 링크 생성
+if ls .*.gitconfig 1> /dev/null 2>&1; then
+    if [ -e "$HOME/.gitconfig" ]; then
+        echo "$HOME/.gitconfig already exists. Removing existing file or link."
+        rm -f "$HOME/.gitconfig" # 기존 파일이나 링크 삭제
+    fi
+
+    # macOS와 Linux에 따라 적절한 .gitconfig 심볼릭 링크 생성
+    if [[ $(uname) == "Darwin" ]]; then
+        echo "Creating symbolic link for macOS .gitconfig..."
+        ln -sf "$(pwd)/.mac.gitconfig" "$HOME/.gitconfig"
+    elif [[ $(uname) == "Linux" ]]; then
+        echo "Creating symbolic link for Linux .gitconfig..."
+        ln -sf "$(pwd)/.linux.gitconfig" "$HOME/.gitconfig"
+    fi
+    echo "Symbolic link for .gitconfig created in home directory."
+else
+    echo ".gitconfig not found in the current directory."
+fi
+
 
 # 7. 기본 쉘을 zsh로 설정
 echo "[7] Setting zsh as the default shell..."

@@ -1,0 +1,51 @@
+[core]
+	editor = vim
+	# editor = code --wait
+	quotepath = false
+	# autocrlf = true    # for Windows (Commit: LF && Checkout: CRLF)
+	# autocrlf = false   # for Windows ONLY (Commit: CRLF)
+	autocrlf = input   # for Linux and Mac (Commit: LF)
+	filemode = false
+[push]
+	followTags = true
+[pull]
+	rebase = false
+[diff]
+	tool = vimdiff
+[credential]
+	helper = store
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+# [commit]
+# 	gpgsign = true
+# [gpg]
+# 	program = /opt/homebrew/bin/gpg
+
+
+####### How to create a ssh-key and add it to the ssh-agent
+# ssh-keygen -t rsa -b 4096 -C "judicious210@gmail.com"
+# eval $(ssh-agent -s)
+#
+# ssh-add ~/.ssh/id_rsa
+# // copy and paste ssh key (~/.ssh/id_rsa.pub) to the github
+#
+# ssh -T git@github.com
+# // yes
+# // Hi JUD210!
+#
+# git remote add origin "git@github.com:jud210/dev-settings-backup"
+
+
+# [difftool "sourcetree"]
+# 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+# 	path =
+# [mergetool "sourcetree"]
+# 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+# 	trustExitCode = true
+# [commit]
+# 	template = /Users/hmin/.stCommitMsg

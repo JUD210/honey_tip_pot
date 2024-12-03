@@ -187,7 +187,6 @@ else
     echo "System pip path: $(which pip)"
 fi
 
-
 ################################################################################
 ############### Backup of Oh-My-Zsh Commentary
 #
@@ -307,3 +306,9 @@ export PATH="$PATH:/Users/jud210/.local/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# GPG 사용시 필요
+#
+# export GPG_TTY=$(tty)
+# https://github.com/romkatv/powerlevel10k/issues/524
+export GPG_TTY=$TTY
