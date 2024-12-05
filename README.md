@@ -6,7 +6,9 @@ cd ~/aiffel
 # 2
 git clone https://github.com/JUD210/honey_tip_pot
 # 3
-source ~/aiffel/honey_tip_pot/terminal_settings/init_my_shell.sh
+cd ~/aiffel/honey_tip_pot/terminal_settings
+# 3
+source init_my_shell.sh
 # 4
 # omz-p10k 커스터마이징 다시 하고 싶으면
 # p10k configure
