@@ -21,7 +21,7 @@ git config --global user.email "your@email.com"
 
 # 5. 터미널 재시작 후, Powerlevel10k 설정
 # p10k configure
-# 권장 셋팅: nnny 111 22 1111 n 1 (y)
+# 권장 셋팅: ynn 111 22 2141 2y 1 (y)
 ```
 
 ## What Gets Installed
