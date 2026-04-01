@@ -19,8 +19,6 @@ alias al="alias"
 alias alg="alias | grep"
 # View alias
 alias all="alias | less"
-# View alias in VSCode
-alias alc="alias | code -"
 # Edit alias
 alias alv="vim $HOME/.my_aliases.sh"
 # Update alias
@@ -64,12 +62,6 @@ alias mc="make clean"
 alias mr="make re"
 alias mt="make test"
 
-alias nn="~/.norminette/norminette.rb"
-# alias nn2="norminette -R CheckForbiddenSourceHeader"
-alias nnc="nn *.c"
-alias nnac="nn */*.c"
-alias nnac.="cd .. && nnac && cd -"
-
 alias rmo="find . -maxdepth 1 -type f -name '*\.o*' -exec rm {} \;"
 alias rmt="rm _TEST*"
 
@@ -97,7 +89,12 @@ alias duhg="du -h | grep '[0-9]G\t'"
 
 alias p="pwd"
 
-alias ls="ls -G"
+# macOS: ls -G, Linux: ls --color=auto
+if [[ "$OSTYPE" == darwin* ]]; then
+    alias ls="ls -G"
+else
+    alias ls="ls --color=auto"
+fi
 alias lsl="ls -lpA"
 alias l="lsl"
 alias lsa="ls -A"
@@ -152,7 +149,6 @@ alias gcad="git commit --amend --no-edit --date=now"
 alias gcp="git cherry-pick"
 
 alias gl="git log"
-alias glc="git log | code -"
 
 alias glo="git log --oneline"
 alias gla="git log --oneline --graph --all"
@@ -162,50 +158,29 @@ alias glro="git log --reverse --oneline"
 alias glra="git log --reverse --oneline --all"
 
 alias gl1="git log --graph --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d'"
-alias gl1c="git log --graph --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d' | code -"
 alias gl11="git log --graph --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%ar %C(Green)<%an>%Creset %s %C(Red)%d'"
-alias gl11c="git log --graph --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%ar %C(Green)<%an>%Creset %s %C(Red)%d' | code -"
 alias gl111="git log --graph --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d'"
-alias gl111c="git log --graph --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d' | code -"
 alias gl2="git log --graph --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d'"
-alias gl2c="git log --graph --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d' | code -"
 alias gl22="git log --graph --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%cr %C(Green)<%cn>%Creset %s %C(Red)%d'"
-alias gl22c="git log --graph --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%cr %C(Green)<%cn>%Creset %s %C(Red)%d' | code -"
 alias gl222="git log --graph --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d'"
-alias gl222c="git log --graph --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d' | code -"
 
 alias glr1="git log --reverse --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d'"
-alias glr1c="git log --reverse --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d' | code -"
 alias glr11="git log --reverse --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%ar %C(Green)<%an>%Creset %s %C(Red)%d'"
-alias glr11c="git log --reverse --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%ar %C(Green)<%an>%Creset %s %C(Red)%d' | code -"
 alias glr111="git log --reverse --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d'"
-alias glr111c="git log --reverse --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d' | code -"
 alias glr2="git log --reverse --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d'"
-alias glr2c="git log --reverse --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d' | code -"
 alias glr22="git log --reverse --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%cr %C(Green)<%cn>%Creset %s %C(Red)%d'"
-alias glr22c="git log --reverse --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%cr %C(Green)<%cn>%Creset %s %C(Red)%d' | code -"
 alias glr222="git log --reverse --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d'"
-alias glr222c="git log --reverse --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d' | code -"
 
 ############
 alias glsf='git ls-files'
-alias glsfc='glsf | code -'
 
 ############
 alias gdf="git diff"           # Unstaged files
-alias gdfc="gdf | code -"    # Unstaged files in VSCode
-
 alias gdfs="git diff --staged" # Staged files
-alias gdfsc="gdfs | code -"
-
 alias gdfn="git diff --name-status "
-alias gdfnc="gdfn | code -"
-
 gdfg() {
     git diff -G"$1"
 }
-alias gdfgc="gdfg | code -"
-
 gdfh() {
     if [[ "$1" == "" ]]; then
         git diff HEAD
@@ -213,8 +188,6 @@ gdfh() {
         git diff HEAD~$1 HEAD
     fi
 }
-alias gdfhc="gdfh | code -"
-
 gdfsh() {
     if [[ "$1" == "" ]]; then
         git diff --staged HEAD
@@ -222,7 +195,6 @@ gdfsh() {
         git diff --staged HEAD~$1
     fi
 }
-alias gdfshc="gdfsh | code -"
 
 ############
 alias gcl="git clone"
@@ -282,16 +254,6 @@ alias gbrd="git branch --delete"
 # git push <remote> :<old_name>
 alias gpsod="git push origin --delete"
 
-### Prevent git from using the old name when pushing in the next step.
-### Otherwise, git will use the old upstream name instead of <new_name>.
-# git branch --unset-upstream <old_name>
-
-### Push the new branch to remote
-# git push <remote> <new_name>
-
-### Reset the upstream branch for the new_name local branch
-# git push <remote> -u <new_name>
-
 ############
 alias gmg="git merge"
 alias gmga="git merge --abort"
@@ -324,20 +286,13 @@ alias gpsdo="git push --delete origin"
 #   git push origin :refs/tags/old
 #   git push --tags
 #
-# The colon in the push command removes the tag from the remote repository. If  you don't do this, Git will create the old tag on your machine when you pull.
+# The colon in the push command removes the tag from the remote repository.
+# If you don't do this, Git will create the old tag on your machine when you pull.
 #
-# Finally, make sure that the other users remove the deleted tag. Please tell  them (co-workers) to run the following command:
+# Finally, make sure that the other users remove the deleted tag:
 #
 #   git pull --prune --tags
 alias gplpt="git pull --prune --tags"
-
-# If you only want those tags which exist on the remote, delete all your local tags:
-#
-#   $ git tag -d $(git tag)
-#
-# And then fetch all the remote tags:
-#
-#   $ git fetch --tags
 
 ############
 # git show v1.4
@@ -397,8 +352,8 @@ alias dkrmiall="docker rmi -f \$(docker images -a -q)"
 # dk build srcs/mysql -t services-mysql
 alias dkb="dk build"
 
-alias dkc="dk container"
-alias dkcr="dkc run"
+alias dkco="dk container"
+alias dkcor="dkco run"
 
 alias dks="dk start"
 
@@ -431,7 +386,6 @@ alias dkclf="dkc logs -f"
 ### Minikube
 alias mk="minikube"
 
-# @@T
 mkst() {
     if [[ "$1" == "vb" ]]; then
         minikube start --driver=virtualbox
@@ -454,7 +408,6 @@ alias kc="kubectl"
 alias kcc="kc create"
 alias kccdp="kcc deployment"
 
-# kc exec -it wordpress-5fd9b5b866-ngws8 -- /bin/sh
 alias kce="kc exec -it"
 
 alias kcg="kc get"
@@ -466,34 +419,16 @@ alias kcgaoy="kcgao yaml"
 alias kcgaoj="kcgao json"
 alias kcgaojq='kcgao json | jq ".items[] | {name:.metadata.name} + .status.capacity"'
 
-alias kcgn="kcg nodes" # ==node ==no
+alias kcgn="kcg nodes"
 alias kcgno="kcgn -o"
 alias kcgnow="kcgno wide"
-alias kcgnoy="kcgno yaml"
-alias kcgnoj="kcgno json"
-alias kcgnojq='kcgno json | jq ".items[] | {name:.metadata.name} + .status.capacity"'
 
 alias kcgp="kcg pod"
 alias kcgpo="kcgp -o"
 alias kcgpow="kcgpo wide"
-alias kcgpoy="kcgpo yaml"
-alias kcgpoj="kcgpo json"
-alias kcgpojq='kcgpo json | jq ".items[] | {name:.metadata.name} + .status.capacity"'
 
 alias kcgrs="kcg replicaset"
-alias kcgrso="kcgrs -o"
-alias kcgrsow="kcgrso wide"
-alias kcgrsoy="kcgrso yaml"
-alias kcgrsoj="kcgrso json"
-alias kcgrsojq='kcgrso json | jq ".items[] | {name:.metadata.name} + .status.capacity"'
-
 alias kcgdp="kcg deployment"
-alias kcgdpo="kcgdp -o"
-alias kcgdpow="kcgdpo wide"
-alias kcgdpoy="kcgdpo yaml"
-alias kcgdpoj="kcgdpo json"
-alias kcgdpojq='kcgdpo json | jq ".items[] | {name:.metadata.name} + .status.capacity"'
-
 alias kcgsv="kcg service"
 
 alias kcglb="kcg loadbalancer"
@@ -519,7 +454,6 @@ alias kcsc="kc scale"
 
 alias kcro="kc rollout"
 
-# kc rollout restart deployment/mysql
 kcror() {
     if [[ "$1" == "dp" ]]; then
         echo "kubectl rollout restart deployment/$2"
@@ -535,7 +469,7 @@ alias sv="service"
 alias svn="service nginx"
 
 ################################################
-# Linux
+# Linux (apt)
 ################################################
 alias ai="sudo apt install -y"
 alias ar="sudo apt remove -y"
@@ -550,53 +484,36 @@ alias ar="sudo apt remove -y"
 # -bash: cd: ~: No such file or directory
 #
 # # works
-# $ varfullpath='/Users/recurvirostridae'
+# $ varfullpath='/path/to/dir'
 # $ cd $varfullpath
 #
 # # works
 # $ varwithhome="$HOME"
 # $ cd $varwithhome
-#
-# # How to change ~/ to $HOME/ in vim
-# :%s/\~\//\$HOME\//g
 
 alias cddl="cd ~/Downloads"
 alias cddk="cd ~/Desktop"
 
-alias cda="cd $HOME/_ALL_CODES"
-
 # Add your own project shortcuts here:
-# alias cdmyproject="cd $HOME/_ALL_CODES/my-project"
-# alias cdmyprojectc="cd $HOME/_ALL_CODES/my-project && code ."
-
-alias c.="code . "
+# alias cdmyproject="cd $HOME/projects/my-project"
 
 ################################################
-# Claude Code
+# Android Studio (macOS only)
 ################################################
-alias cc="claude --dangerously-skip-permissions"
-alias ccu="ccusage blocks --live"
+# alias opas="open -a /Applications/Android\ Studio.app"
 
 ################################################
-# Blog
+# Brew (macOS only)
 ################################################
-alias jks="jekyll serve --livereload"
-
-################################################
-# Android Studio
-################################################
-alias opas="open -a /Applications/Android\ Studio.app"
-
-################################################
-# Brew
-################################################
-alias br="brew"
-alias bri="brew install"
-alias bric="brew install --cask"
-alias brui="brew uninstall"
-alias bruic="brew uninstall --cask"
-alias bru="brew upgrade"
-alias brug="brew upgrade --greedy"
+if [[ "$OSTYPE" == darwin* ]]; then
+    alias br="brew"
+    alias bri="brew install"
+    alias bric="brew install --cask"
+    alias brui="brew uninstall"
+    alias bruic="brew uninstall --cask"
+    alias bru="brew upgrade"
+    alias brug="brew upgrade --greedy"
+fi
 
 ################################################
 # Shell Commands

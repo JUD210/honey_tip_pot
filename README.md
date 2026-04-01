@@ -2,25 +2,26 @@
 
 Oh My Zsh + Powerlevel10k 테마로 터미널을 한 방에 세팅하는 가이드입니다.
 
-## Quick Start
+## Quick Start (Ubuntu)
 
 ```bash
-# 1. 원하는 디렉토리로 이동
+# 1. 홈 디렉토리로 이동
 cd ~
 
 # 2. 이 레포를 클론
 git clone https://github.com/JUD210/honey_tip_pot
 
-# 3. terminal_settings 디렉토리로 이동
+# 3. 초기화 스크립트 실행
 cd ~/honey_tip_pot/terminal_settings
+bash init_my_shell.sh
 
-# 4. 초기화 스크립트 실행
-source init_my_shell.sh
+# 4. Git 사용자 설정 (필수!)
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
 
-# 5. (선택) Powerlevel10k 커스터마이징
+# 5. 터미널 재시작 후, Powerlevel10k 설정
 # p10k configure
-#
-# 기본(권장) 셋팅: nnny 111 22 1111 n 1 (y)
+# 권장 셋팅: nnny 111 22 1111 n 1 (y)
 ```
 
 ## What Gets Installed
@@ -36,28 +37,16 @@ source init_my_shell.sh
 
 | File | Description |
 |---|---|
-| `.zshrc` | Zsh 설정 (멀티 OS 지원: macOS, WSL2, Git Bash, Termux) |
+| `.zshrc` | Zsh 설정 (멀티 OS 지원: macOS, Ubuntu/WSL2, Git Bash, Termux) |
 | `.my_aliases.sh` | 단축 명령어 모음 (git, docker, kubectl, flutter 등) |
 | `.vimrc` | Vim 기본 설정 |
-| `.bashrc` | Bash 실행 시 zsh로 전환 |
-| `.p10k.zsh` | Powerlevel10k 테마 설정 |
+| `.bashrc` | Bash 실행 시 zsh로 자동 전환 |
 | `.gitconfig` | Git 설정 (OS에 따라 `.mac.gitconfig` 또는 `.linux.gitconfig` 사용) |
 
-## After Setup
-
-### Git 사용자 설정 (필수)
-
-설치 후 반드시 본인의 git 사용자 정보를 설정하세요:
-
-```bash
-git config --global user.name "Your Name"
-git config --global user.email "your_email@example.com"
-```
-
-### 주요 단축 명령어 (alias)
+## 주요 단축 명령어 (alias)
 
 <details>
-<summary>Git aliases</summary>
+<summary>Git</summary>
 
 | Alias | Command |
 |---|---|
@@ -69,14 +58,14 @@ git config --global user.email "your_email@example.com"
 | `gco` | `git checkout` |
 | `gcob` | `git checkout -b` |
 | `gbr` | `git branch` |
-| `gl1` | `git log` (pretty format with date/author) |
+| `gl1` | `git log` (pretty format: date + author) |
 | `gla` | `git log --oneline --graph --all` |
 | `gdf` | `git diff` |
 
 </details>
 
 <details>
-<summary>Docker / Kubernetes aliases</summary>
+<summary>Docker / Kubernetes</summary>
 
 | Alias | Command |
 |---|---|
@@ -89,7 +78,7 @@ git config --global user.email "your_email@example.com"
 </details>
 
 <details>
-<summary>Navigation aliases</summary>
+<summary>Navigation</summary>
 
 | Alias | Command |
 |---|---|
@@ -109,6 +98,6 @@ git config --global user.email "your_email@example.com"
 
 ## Customization
 
-- **프로젝트별 cd 단축키**: `.my_aliases.sh`의 `cd settings` 섹션에 추가
 - **Powerlevel10k 재설정**: `p10k configure`
-- **alias 추가/수정**: `.my_aliases.sh` 파일 편집 후 `als`로 즉시 적용
+- **alias 추가/수정**: `.my_aliases.sh` 편집 후 `als`로 즉시 적용
+- **프로젝트별 cd 단축키**: `.my_aliases.sh`의 `cd settings` 섹션에 추가

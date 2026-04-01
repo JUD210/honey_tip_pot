@@ -8,74 +8,71 @@ fi
 
 # Mac OS
 if [[ "$OSTYPE" == darwin* ]]; then
-    ### Imported from .zprofile ###
     # Init Homebrew
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    if [ -f /opt/homebrew/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
 
     export PATH="$PATH:$HOME/.local/bin"
-    ######################################
 
-    ip=$(ifconfig en0 | grep 'inet ' | awk '{print $2}')
-    echo "IP: $ip"
+    ip=$(ifconfig en0 2>/dev/null | grep 'inet ' | awk '{print $2}')
+    [ -n "$ip" ] && echo "IP: $ip"
 
     export PATH="/usr/sbin:$PATH"
     export PATH="/sbin:$PATH"
-    # Reinstalled using brew: Not required path
-    #
-    # export PATH="$HOME/Developments/flutter/bin:$PATH"
 
-    # brew install pyenv pyenv-virtualenv
-    # pyenv install 3.12.3
-    # pyenv versions
-    # pyenv virtualenv 3.12.3 ~/_ALL_CODES/_venv_py
+    # pyenv (brew install pyenv pyenv-virtualenv)
     export PATH="$HOME/.pyenv/bin:$PATH"
     if command -v pyenv 1>/dev/null 2>&1; then
         eval "$(pyenv init --path)"
         eval "$(pyenv init -)"
     fi
 
-	# Ruby
-    # export GEM_HOME=$HOME/.gem
-    # export PATH="/usr/local/opt/ruby/bin:$PATH"
-    # export PATH=$GEM_HOME/bin:$PATH
-
-    # chruby installation for jekyll
+    # Ruby (chruby for jekyll)
     # https://jekyllrb.com/docs/installation/macos/
-    # source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh
-    # source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
-    # chruby ruby-3.3.5
+    if [ -f "$(brew --prefix 2>/dev/null)/opt/chruby/share/chruby/chruby.sh" ]; then
+        source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh
+        source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
+        # chruby ruby-3.3.5
+    fi
 
-	# Java
+    # Java: uncomment and set your preferred JDK
     # export JAVA_HOME=$(/usr/libexec/java_home -v 17)
-    # export PATH=$JAVA_HOME/bin:$PATH
-
-    # Java: OpenJDK (Brew install)
-    # export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
-    # export PATH="$JAVA_HOME/bin:$PATH"
-
-    # Java: Android Studio JDK
     # export JAVA_HOME="/Applications/Android Studio.app/Contents/jre/Contents/Home"
     # export PATH=$JAVA_HOME/bin:$PATH
 
     # Flutter
     export PATH="$PATH":"$HOME/.pub-cache/bin"
 
-# WSL2
+# Linux (Ubuntu / WSL2)
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-    ip=$(hostname -I | sed s"/[0-9.]*/\0 |/g" | sed s"/ |  |//")
-	echo "IP: $ip"
+    ip=$(hostname -I 2>/dev/null | awk '{print $1}')
+    [ -n "$ip" ] && echo "IP: $ip"
 
-# Git Bash //Win10
+    export PATH="$PATH:$HOME/.local/bin"
+
+    # pyenv
+    export PATH="$HOME/.pyenv/bin:$PATH"
+    if command -v pyenv 1>/dev/null 2>&1; then
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+    fi
+
+    # Linuxbrew (optional)
+    # if [ -d "$HOME/.linuxbrew" ]; then
+    #     eval $($HOME/.linuxbrew/bin/brew shellenv)
+    # fi
+
+# Git Bash (Windows)
 elif [[ "$OSTYPE" == "msys" ]]; then
     ip=$(ipconfig | grep IPv4 | sed s"/.*: //g" | awk 1 ORS=' | ' | sed s"/ | $//g")
     echo "$ip"
 
 elif [[ "$OSTYPE" == "linux-android" ]]; then
-    # Android //Termux (No rooting)
-    ip=$(hostname -I | sed s"/[0-9.]*/\0 |/g" | sed s"/ |  |//")
-    echo "$ip"
+    # Android / Termux
+    ip=$(hostname -I 2>/dev/null | awk '{print $1}')
+    [ -n "$ip" ] && echo "$ip"
 
-    # To prevent Unknown AVD name Error
     export ANDROID_AVD_HOME=$HOME/.android/avd/
 
 else
@@ -83,13 +80,6 @@ else
     echo "This is an unexpected situation! ($OSTYPE / $(hostname))"
 fi
 
-
-# sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
-# git clone https://github.com/Homebrew/brew $HOME/.linuxbrew/Homebrew
-# mkdir $HOME/.linuxbrew/bin
-# ln -s $HOME/.linuxbrew/Homebrew/bin/brew $HOME/.linuxbrew/bin
-# eval $($HOME/.linuxbrew/bin/brew shellenv)
 
 ##############################################################################
 
@@ -125,170 +115,17 @@ PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print}' | sed 's/:$
 # Python virtual environment auto-activation
 if [ -d "$HOME/.pyenv/versions/_venv_py" ]; then
     source $HOME/.pyenv/versions/_venv_py/bin/activate
-    echo "Python3 Virtual environment activated. ($(basename $VIRTUAL_ENV))"
-
-    echo "Python path: $(which python3)"
-    echo "pip path: $(which pip)"
-elif [ -d "$HOME/_ALL_CODES/_venv_py" ]; then
-    source $HOME/_ALL_CODES/_venv_py/bin/activate
-    echo "Python3 Virtual environment activated. ($(basename $VIRTUAL_ENV))"
-
-    echo "Python path: $(which python3)"
-    echo "pip path: $(which pip)"
-else
-    echo "Python3 Virtual environment is not activated."
-
-    echo "System Python path: $(which python3)"
-    echo "System pip path: $(which pip)"
+    echo "Python venv activated: $(basename $VIRTUAL_ENV)"
+elif [ -d "$HOME/_venv_py" ]; then
+    source $HOME/_venv_py/bin/activate
+    echo "Python venv activated: $(basename $VIRTUAL_ENV)"
 fi
 
-
-# Print all PATHs
-python3 -c "
-import os
-import sys
-
-if sys.platform == 'win32':
-	splitter = ';'
-else:
-	splitter = ':'
-
-paths = os.environ['PATH'].split(splitter)
-
-print('<<<<<<<<< paths start <<<<<<<<<')
-
-for i, l in enumerate(paths):
-	print('[{:02d}]'.format(i) + l)
-
-print('>>>>>>>>> paths end >>>>>>>>>')
-"
 
 echo "OSTYPE: $OSTYPE"
 echo "NAME: $(hostname)"
 
-################################################################################
-############### Backup of Oh-My-Zsh Commentary
-#
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-###### export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-###### ZSH_THEME="agnoster"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $HOME/.oh-my-zsh/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $HOME/.oh-my-zsh/plugins/*
-# Custom plugins may be added to $HOME/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-###### plugins=(git)
-
-###### source $ZSH/oh-my-zsh.sh
-
-# Disable default aliases made by oh-my-zsh.sh
-###### unalias -m "*"
-
-# Path to add vscode command (ex: code .)
-###### alias code="$HOME/Downloads/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
-
-###### source $HOME/.my_aliases.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#	export EDITOR='vim'
-# else
-#	export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate $HOME/.zshrc"
-# alias ohmyzsh="mate $HOME/.oh-my-zsh"
-################################################################################
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-export PATH="$PATH:$HOME/.local/bin"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # GPG signing
-#
-# export GPG_TTY=$(tty)
 # https://github.com/romkatv/powerlevel10k/issues/524
 export GPG_TTY=$TTY
 
