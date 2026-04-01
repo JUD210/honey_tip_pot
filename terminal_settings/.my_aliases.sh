@@ -499,6 +499,19 @@ alias cda="cd $HOME/_ALL_CODES"
 # Add your own project shortcuts here:
 # alias cdmyproject="cd $HOME/_ALL_CODES/my-project"
 
+alias c.="code . "
+
+################################################
+# Claude Code
+################################################
+alias cc="claude --dangerously-skip-permissions"
+alias ccu="ccusage blocks --live"
+
+################################################
+# Blog
+################################################
+alias jks="jekyll serve --livereload"
+
 ################################################
 # Android Studio (macOS only)
 ################################################
