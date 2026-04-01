@@ -96,6 +96,20 @@ git config --global user.email "your@email.com"
 - `d`: 아래로 페이지 이동
 - `u`: 위로 페이지 이동
 
+## Claude Code Status Line (Optional)
+
+Claude Code에서 시간, 모델, 프로젝트명, git 브랜치를 상태줄에 표시합니다.
+
+```bash
+cd ~/_ALL_CODES/honey_tip_pot/claude_code
+bash setup_claude_code.sh
+```
+
+적용 후 Claude Code 재시작하면 상단에 표시됩니다:
+```
+🕒 12:37:22 | 🤖 Opus 4.6 (1M context) | 📁 my-project | 🌿 main
+```
+
 ## Customization
 
 - **Powerlevel10k 재설정**: `p10k configure`
