@@ -1,1 +1,2 @@
 zsh
+. "$HOME/.cargo/env"

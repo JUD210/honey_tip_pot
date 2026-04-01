@@ -19,6 +19,8 @@ alias al="alias"
 alias alg="alias | grep"
 # View alias
 alias all="alias | less"
+# View alias in VSCode
+alias alc="alias | code -"
 # Edit alias
 alias alv="vim $HOME/.my_aliases.sh"
 # Update alias
@@ -43,15 +45,8 @@ alias vOac="vim -O */*.c"
 # C / C++ Language
 ################################################
 alias t="./_TEST.out"
-# TEMPORARY
-alias tt="./_libft_war_machine/grademe.sh"
 
-alias cc="gcc -Wall -Wextra -g3 -fsanitize=address"
-alias cca="cc *.c"
-alias ccm="cc m.c"
-alias ccat="cca -D TEST=1 -o _TEST.out && ./_TEST.out"
-alias ccmt="ccm -D TEST=1 -o _TEST.out && ./_TEST.out"
-
+alias gccw="gcc -Wall -Wextra -g3 -fsanitize=address"
 alias gcca="gcc *.c"
 alias gccm="gcc m.c"
 alias gccat="gcc *.c -D TEST=1 -o _TEST.out && ./_TEST.out"
@@ -81,11 +76,17 @@ alias rmt="rm _TEST*"
 ################################################
 # Flutter
 ################################################
-alias fpa="flutter pub add"
-alias fpu="flutter pub upgrade"
-alias fpr="flutter pub remove"
-alias fpo="flutter pub outdated"
-alias fps="flutter pub search"
+alias flc="flutter clean"
+
+alias flpa="flutter pub add"
+alias flpg="flutter pub get"
+alias flpu="flutter pub upgrade"
+alias flpr="flutter pub remove"
+alias flpo="flutter pub outdated"
+alias flps="flutter pub search"
+
+alias fld="flutter doctor"
+alias fldv="flutter doctor -v"
 
 ################################################
 # Directory / Files
@@ -151,6 +152,8 @@ alias gcad="git commit --amend --no-edit --date=now"
 alias gcp="git cherry-pick"
 
 alias gl="git log"
+alias glc="git log | code -"
+
 alias glo="git log --oneline"
 alias gla="git log --oneline --graph --all"
 
@@ -159,43 +162,67 @@ alias glro="git log --reverse --oneline"
 alias glra="git log --reverse --oneline --all"
 
 alias gl1="git log --graph --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d'"
+alias gl1c="git log --graph --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d' | code -"
 alias gl11="git log --graph --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%ar %C(Green)<%an>%Creset %s %C(Red)%d'"
+alias gl11c="git log --graph --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%ar %C(Green)<%an>%Creset %s %C(Red)%d' | code -"
 alias gl111="git log --graph --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d'"
+alias gl111c="git log --graph --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d' | code -"
 alias gl2="git log --graph --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d'"
+alias gl2c="git log --graph --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d' | code -"
 alias gl22="git log --graph --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%cr %C(Green)<%cn>%Creset %s %C(Red)%d'"
+alias gl22c="git log --graph --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%cr %C(Green)<%cn>%Creset %s %C(Red)%d' | code -"
 alias gl222="git log --graph --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d'"
+alias gl222c="git log --graph --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d' | code -"
 
 alias glr1="git log --reverse --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d'"
+alias glr1c="git log --reverse --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d' | code -"
 alias glr11="git log --reverse --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%ar %C(Green)<%an>%Creset %s %C(Red)%d'"
+alias glr11c="git log --reverse --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%ar %C(Green)<%an>%Creset %s %C(Red)%d' | code -"
 alias glr111="git log --reverse --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d'"
+alias glr111c="git log --reverse --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%ad %C(Green)<%an>%Creset %s %C(Red)%d' | code -"
 alias glr2="git log --reverse --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d'"
+alias glr2c="git log --reverse --all --abbrev-commit --date=format:'%y.%m.%d %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d' | code -"
 alias glr22="git log --reverse --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%cr %C(Green)<%cn>%Creset %s %C(Red)%d'"
+alias glr22c="git log --reverse --all --abbrev-commit --date=relative --pretty=format:'%C(Yellow)%h %C(Cyan)%cr %C(Green)<%cn>%Creset %s %C(Red)%d' | code -"
 alias glr222="git log --reverse --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d'"
+alias glr222c="git log --reverse --all --abbrev-commit --date=format:'%Y.%m.%d %H:%M %a' --pretty=format:'%C(Yellow)%h %C(Cyan)%cd %C(Green)<%cn>%Creset %s %C(Red)%d' | code -"
 
 ############
 alias glsf='git ls-files'
+alias glsfc='glsf | code -'
 
 ############
 alias gdf="git diff"           # Unstaged files
+alias gdfc="gdf | code -"    # Unstaged files in VSCode
+
 alias gdfs="git diff --staged" # Staged files
+alias gdfsc="gdfs | code -"
+
 alias gdfn="git diff --name-status "
+alias gdfnc="gdfn | code -"
+
 gdfg() {
-	git diff -G"$1"
+    git diff -G"$1"
 }
+alias gdfgc="gdfg | code -"
+
 gdfh() {
-	if [[ "$1" == "" ]]; then
-		git diff HEAD
-	else
-		git diff HEAD~$1 HEAD
-	fi
+    if [[ "$1" == "" ]]; then
+        git diff HEAD
+    else
+        git diff HEAD~$1 HEAD
+    fi
 }
+alias gdfhc="gdfh | code -"
+
 gdfsh() {
-	if [[ "$1" == "" ]]; then
-		git diff --staged HEAD
-	else
-		git diff --staged HEAD~$1
-	fi
+    if [[ "$1" == "" ]]; then
+        git diff --staged HEAD
+    else
+        git diff --staged HEAD~$1
+    fi
 }
+alias gdfshc="gdfsh | code -"
 
 ############
 alias gcl="git clone"
@@ -335,6 +362,8 @@ alias gcf="git config"
 alias gcfl="git config -l"
 alias gcfge="git config --global --edit"
 
+############
+alias gcinfo='git gc --aggressive --prune=now && git count-objects -vH'
 
 ################################################
 # Docker
@@ -404,13 +433,13 @@ alias mk="minikube"
 
 # @@T
 mkst() {
-	if [[ "$1" == "vb" ]]; then
-		minikube start --driver=virtualbox
-	elif [[ "$1" == "hk" ]]; then
-		minikube start --driver=hyperkit
-	else
-		minikube start # default driver: docker
-	fi
+    if [[ "$1" == "vb" ]]; then
+        minikube start --driver=virtualbox
+    elif [[ "$1" == "hk" ]]; then
+        minikube start --driver=hyperkit
+    else
+        minikube start # default driver: docker
+    fi
 }
 
 alias mkstat="mk status"
@@ -492,11 +521,11 @@ alias kcro="kc rollout"
 
 # kc rollout restart deployment/mysql
 kcror() {
-	if [[ "$1" == "dp" ]]; then
-		echo "kubectl rollout restart deployment/$2"
-	else
-		echo "kubectl rollout restart $1"
-	fi
+    if [[ "$1" == "dp" ]]; then
+        echo "kubectl rollout restart deployment/$2"
+    else
+        echo "kubectl rollout restart $1"
+    fi
 }
 
 ################################################
@@ -512,7 +541,7 @@ alias ai="sudo apt install -y"
 alias ar="sudo apt remove -y"
 
 ################################################
-# cd settings
+# cd settings (customize these for your projects)
 ################################################
 
 # # doesn't work
@@ -531,38 +560,27 @@ alias ar="sudo apt remove -y"
 # # How to change ~/ to $HOME/ in vim
 # :%s/\~\//\$HOME\//g
 
-# export ONE_DRIVE="blah..." is in .zshrc
-
-###### WARNING!!! ######
-# dev settings: backup all
-alias dsba="zsh $HOME/_ALL_CODES/dev-settings-backup/BACKUP_ALL.sh"
-
-# dev settings: apply all
-alias dsaa="zsh $HOME/_ALL_CODES/dev-settings-backup/APPLY_ALL.sh"
-########################
-
 alias cddl="cd ~/Downloads"
 alias cddk="cd ~/Desktop"
-alias cdo="cd $ONE_DRIVE/"
 
 alias cda="cd $HOME/_ALL_CODES"
-alias cdaf="cd $HOME/_ALL_CODES/AIFFEL_quest_cr"
-alias cdafd="cd $HOME/_ALL_CODES/AIFFEL_DATAthon"
-alias cdaff="cd $HOME/_ALL_CODES/AIFFEL_Flutter_FastAPI"
-alias cdafv="cd $HOME/_ALL_CODES/AIFFEL_vgg16_api_tutorial"
 
-alias cds="cd $HOME/_ALL_CODES/_Study_Notes"
+# Add your own project shortcuts here:
+# alias cdmyproject="cd $HOME/_ALL_CODES/my-project"
+# alias cdmyprojectc="cd $HOME/_ALL_CODES/my-project && code ."
 
-alias cddsb="cd $HOME/_ALL_CODES/dev-settings-backup"
-alias cddsbt="cd $HOME/_ALL_CODES/dev-settings-backup/terminal_settings"
+alias c.="code . "
 
-alias cdp="cd $HOME/_ALL_CODES/_PLAYGROUND_for_each_IDE"
-alias cdpp="cd $HOME/_ALL_CODES/_PLAYGROUND_for_each_IDE/Pycharm"
+################################################
+# Claude Code
+################################################
+alias cc="claude --dangerously-skip-permissions"
+alias ccu="ccusage blocks --live"
 
-alias cd1="cd $HOME/_ALL_CODES/AIFFEL_quest_cr"
-alias cd2="cd $HOME/_ALL_CODES/dev-settings-backup"
-
-
+################################################
+# Blog
+################################################
+alias jks="jekyll serve --livereload"
 
 ################################################
 # Android Studio
@@ -574,7 +592,11 @@ alias opas="open -a /Applications/Android\ Studio.app"
 ################################################
 alias br="brew"
 alias bri="brew install"
+alias bric="brew install --cask"
+alias brui="brew uninstall"
+alias bruic="brew uninstall --cask"
 alias bru="brew upgrade"
+alias brug="brew upgrade --greedy"
 
 ################################################
 # Shell Commands

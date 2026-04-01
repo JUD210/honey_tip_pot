@@ -28,7 +28,7 @@
 
 
 ####### How to create a ssh-key and add it to the ssh-agent
-# ssh-keygen -t rsa -b 4096 -C "judicious210@gmail.com"
+# ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 # eval $(ssh-agent -s)
 #
 # ssh-add ~/.ssh/id_rsa
@@ -36,16 +36,6 @@
 #
 # ssh -T git@github.com
 # // yes
-# // Hi JUD210!
+# // Hi YourUsername!
 #
-# git remote add origin "git@github.com:jud210/dev-settings-backup"
-
-
-# [difftool "sourcetree"]
-# 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-# 	path =
-# [mergetool "sourcetree"]
-# 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-# 	trustExitCode = true
-# [commit]
-# 	template = /Users/hmin/.stCommitMsg
+# git remote add origin "git@github.com:YourUsername/your-repo"

@@ -6,58 +6,23 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 
-if [[ "$(command -v python3)" != "" ]]; then
-	alias py="python3"
-elif [[ "$(command -v python)" != "" ]]; then
-	alias py="python"
-elif [[ "$(command -v python2)" != "" ]]; then
-	alias py="python2"
-fi
-
-
-# Print all PATHs
-py -c "
-import os
-import sys
-
-if sys.platform == 'win32':
-	splitter = ';'
-else:
-	splitter = ':'
-
-paths = os.environ['PATH'].split(splitter)
-
-print('<<<<<<<<< paths start <<<<<<<<<')
-
-for i, l in enumerate(paths):
-	print('[{:02d}]'.format(i) + l)
-
-print('>>>>>>>>> paths end >>>>>>>>>')
-"
-
-echo "OSTYPE: $OSTYPE"
-echo "NAME: $(hostname)"
-
 # Mac OS
 if [[ "$OSTYPE" == darwin* ]]; then
     ### Imported from .zprofile ###
     # Init Homebrew
     eval "$(/opt/homebrew/bin/brew shellenv)"
 
-    # Created by `pipx` on 2024-08-22 05:48:00
-    export PATH="$PATH:/Users/jud210/.local/bin"
+    export PATH="$PATH:$HOME/.local/bin"
     ######################################
 
     ip=$(ifconfig en0 | grep 'inet ' | awk '{print $2}')
     echo "IP: $ip"
 
-    if [[ "$(whoami)" == "jud210" ]]; then
-		export ONE_DRIVE="~/OneDrive/"
-    fi
-
     export PATH="/usr/sbin:$PATH"
     export PATH="/sbin:$PATH"
-    export PATH="$HOME/Developments/flutter/bin:$PATH"
+    # Reinstalled using brew: Not required path
+    #
+    # export PATH="$HOME/Developments/flutter/bin:$PATH"
 
     # brew install pyenv pyenv-virtualenv
     # pyenv install 3.12.3
@@ -76,42 +41,37 @@ if [[ "$OSTYPE" == darwin* ]]; then
 
     # chruby installation for jekyll
     # https://jekyllrb.com/docs/installation/macos/
-    source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh
-    source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
-    chruby ruby-3.3.5
+    # source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh
+    # source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
+    # chruby ruby-3.3.5
 
 	# Java
-    export JAVA_HOME="$(/usr/libexec/java_home)"
+    # export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+    # export PATH=$JAVA_HOME/bin:$PATH
 
-    # Brew install openjdk
-    export PATH="/usr/local/opt/openjdk/bin:$PATH"
-    export CPPFLAGS="-I/usr/local/opt/openjdk/include"
+    # Java: OpenJDK (Brew install)
+    # export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+    # export PATH="$JAVA_HOME/bin:$PATH"
+
+    # Java: Android Studio JDK
+    # export JAVA_HOME="/Applications/Android Studio.app/Contents/jre/Contents/Home"
+    # export PATH=$JAVA_HOME/bin:$PATH
+
+    # Flutter
+    export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 # WSL2
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     ip=$(hostname -I | sed s"/[0-9.]*/\0 |/g" | sed s"/ |  |//")
 	echo "IP: $ip"
 
-    if [[ "$(whoami)" == "hyuk_ubuntu" ]]; then
-        export ONE_DRIVE="/mnt/d/OneDrive"
-    fi
-
 # Git Bash //Win10
 elif [[ "$OSTYPE" == "msys" ]]; then
     ip=$(ipconfig | grep IPv4 | sed s"/.*: //g" | awk 1 ORS=' | ' | sed s"/ | $//g")
     echo "$ip"
 
-    if [[ "$(hostname)" == "DESKTOP-JM0COM2" ]]; then
-        # Desktop
-        export ONE_DRIVE="d:/OneDrive"
-    elif [[ "$(hostname)" == "DESKTOP-6QHD9DP" ]]; then
-        # Laptop
-        export ONE_DRIVE="c:/Users/judic/OneDrive"
-    fi
-
 elif [[ "$OSTYPE" == "linux-android" ]]; then
     # Android //Termux (No rooting)
-    # My Android Phone
     ip=$(hostname -I | sed s"/[0-9.]*/\0 |/g" | sed s"/ |  |//")
     echo "$ip"
 
@@ -156,36 +116,55 @@ source $HOME/.my_aliases.sh
 
 
 # delete duplicated PATH
-PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print}')
+PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print}' | sed 's/:$//')
 
 # To customize prompt, run `p10k configure` or edit $HOME/.p10k.zsh.
 [[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
 
 
-# 가상환경 자동 활성화 및 경로 출력
+# Python virtual environment auto-activation
 if [ -d "$HOME/.pyenv/versions/_venv_py" ]; then
     source $HOME/.pyenv/versions/_venv_py/bin/activate
     echo "Python3 Virtual environment activated. ($(basename $VIRTUAL_ENV))"
 
-    # Python과 pip 경로 출력
     echo "Python path: $(which python3)"
-    # Python path: /Users/jud210/.pyenv/versions/3.12.3/envs/_venv_py/bin/python3
     echo "pip path: $(which pip)"
-    # pip path: /Users/jud210/.pyenv/versions/3.12.3/envs/_venv_py/bin/pip
 elif [ -d "$HOME/_ALL_CODES/_venv_py" ]; then
     source $HOME/_ALL_CODES/_venv_py/bin/activate
     echo "Python3 Virtual environment activated. ($(basename $VIRTUAL_ENV))"
 
-    # Python과 pip 경로 출력
     echo "Python path: $(which python3)"
     echo "pip path: $(which pip)"
 else
     echo "Python3 Virtual environment is not activated."
 
-    # 시스템의 Python과 pip 경로 출력
     echo "System Python path: $(which python3)"
     echo "System pip path: $(which pip)"
 fi
+
+
+# Print all PATHs
+python3 -c "
+import os
+import sys
+
+if sys.platform == 'win32':
+	splitter = ';'
+else:
+	splitter = ':'
+
+paths = os.environ['PATH'].split(splitter)
+
+print('<<<<<<<<< paths start <<<<<<<<<')
+
+for i, l in enumerate(paths):
+	print('[{:02d}]'.format(i) + l)
+
+print('>>>>>>>>> paths end >>>>>>>>>')
+"
+
+echo "OSTYPE: $OSTYPE"
+echo "NAME: $(hostname)"
 
 ################################################################################
 ############### Backup of Oh-My-Zsh Commentary
@@ -194,7 +173,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-###### export ZSH="/Users/hmin/.oh-my-zsh"
+###### export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -297,18 +276,23 @@ fi
 # Example aliases
 # alias zshconfig="mate $HOME/.zshrc"
 # alias ohmyzsh="mate $HOME/.oh-my-zsh"
+################################################################################
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Created by `pipx` on 2024-08-22 05:48:00
-export PATH="$PATH:/Users/jud210/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# GPG 사용시 필요
+# GPG signing
 #
 # export GPG_TTY=$(tty)
 # https://github.com/romkatv/powerlevel10k/issues/524
 export GPG_TTY=$TTY
+
+# NVM (Node Version Manager)
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
