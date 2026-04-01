@@ -494,8 +494,10 @@ alias ar="sudo apt remove -y"
 alias cddl="cd ~/Downloads"
 alias cddk="cd ~/Desktop"
 
+alias cda="cd $HOME/_ALL_CODES"
+
 # Add your own project shortcuts here:
-# alias cdmyproject="cd $HOME/projects/my-project"
+# alias cdmyproject="cd $HOME/_ALL_CODES/my-project"
 
 ################################################
 # Android Studio (macOS only)

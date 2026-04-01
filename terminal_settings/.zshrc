@@ -116,8 +116,8 @@ PATH=$(echo $PATH | awk -v RS=: -v ORS=: '!($0 in a) {a[$0]; print}' | sed 's/:$
 if [ -d "$HOME/.pyenv/versions/_venv_py" ]; then
     source $HOME/.pyenv/versions/_venv_py/bin/activate
     echo "Python venv activated: $(basename $VIRTUAL_ENV)"
-elif [ -d "$HOME/_venv_py" ]; then
-    source $HOME/_venv_py/bin/activate
+elif [ -d "$HOME/_ALL_CODES/_venv_py" ]; then
+    source $HOME/_ALL_CODES/_venv_py/bin/activate
     echo "Python venv activated: $(basename $VIRTUAL_ENV)"
 fi
 
